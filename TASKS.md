@@ -18,10 +18,10 @@
 | 3 | TASK-003 — Seed do catálogo | PHASE-01 | HIGH | TASK-002 | DONE |
 | 4 | TASK-004 — Autenticação | PHASE-01 | CRITICAL | TASK-002 | DONE |
 | 5 | TASK-005 — Checkpoint PHASE-01 | PHASE-01 | CRITICAL | TASK-003, TASK-004 | DONE |
-| 6 | TASK-006 — Design system e página inicial | PHASE-02 | HIGH | TASK-005 | READY |
-| 7 | TASK-007 — Catálogo, busca e filtros | PHASE-02 | HIGH | TASK-006 | BLOCKED |
+| 6 | TASK-006 — Design system e página inicial | PHASE-02 | HIGH | TASK-005 | IN_PROGRESS |
+| 7 | TASK-007 — Catálogo, busca e filtros | PHASE-02 | HIGH | TASK-005 | READY |
 | 8 | TASK-008 — Detalhe e SEO público | PHASE-02 | HIGH | TASK-007 | BLOCKED |
-| 9 | TASK-009 — Checkpoint PHASE-02 | PHASE-02 | CRITICAL | TASK-008 | BLOCKED |
+| 9 | TASK-009 — Checkpoint PHASE-02 | PHASE-02 | CRITICAL | TASK-006, TASK-008 | BLOCKED |
 | 10 | TASK-010 — Perfil e endereço | PHASE-03 | HIGH | TASK-009 | BLOCKED |
 | 11 | TASK-011 — Carrinho persistente | PHASE-03 | CRITICAL | TASK-010 | BLOCKED |
 | 12 | TASK-012 — Revisão e checkout transacional | PHASE-03 | CRITICAL | TASK-011 | BLOCKED |
@@ -41,7 +41,9 @@ flowchart LR
     T002 --> T004[TASK-004]
     T003 --> T005[TASK-005]
     T004 --> T005
-    T005 --> T006[TASK-006] --> T007[TASK-007] --> T008[TASK-008] --> T009[TASK-009]
+    T005 --> T006[TASK-006]
+    T005 --> T007[TASK-007] --> T008[TASK-008] --> T009[TASK-009]
+    T006 --> T009
     T009 --> T010[TASK-010] --> T011[TASK-011] --> T012[TASK-012] --> T013[TASK-013] --> T014[TASK-014]
     T014 --> T015[TASK-015] --> T016[TASK-016] --> T017[TASK-017] --> T018[TASK-018]
 ```
@@ -463,7 +465,9 @@ DoD global + relatório de checkpoint + TASK-006 promovida a `READY` somente dep
 
 ### Status
 
-`READY`
+`IN_PROGRESS`
+
+Execução coordenada com TASK-007 e TASK-008: a conclusão desta TASK depende da validação dos destinos da navegação implementados nas tarefas seguintes. Build e testes de renderização da home passaram em 320 px e 1280 px, incluindo fallback de imagem; navegação ainda pendente.
 
 ### Phase / Priority
 
@@ -533,7 +537,7 @@ DoD global + revisão visual e acessível registrada.
 
 ### Status
 
-`BLOCKED`
+`READY`
 
 ### Phase / Priority
 
@@ -545,7 +549,7 @@ Entregar catálogo server-side com busca e filtros combináveis refletidos em `s
 
 ### Dependências
 
-`DEPENDS_ON: TASK-006`
+`DEPENDS_ON: TASK-005` (execução coordenada com TASK-006 e TASK-008 para validar a navegação completa).
 
 ### Requisitos relacionados
 
@@ -681,7 +685,7 @@ Validar jornada pública, responsividade, acessibilidade e SEO antes da compra.
 
 ### Dependências
 
-`DEPENDS_ON: TASK-008`
+`DEPENDS_ON: TASK-006, TASK-008`
 
 ### Requisitos relacionados
 
