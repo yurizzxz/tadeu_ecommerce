@@ -13,7 +13,7 @@
 
 | Ordem | TASK | Fase | Prioridade | Dependências | Estado |
 |---:|---|---|---|---|---|
-| 1 | TASK-001 — Bootstrap da aplicação | PHASE-01 | CRITICAL | NONE | READY |
+| 1 | TASK-001 — Bootstrap da aplicação | PHASE-01 | CRITICAL | NONE | FAILED |
 | 2 | TASK-002 — Schema e migrations | PHASE-01 | CRITICAL | TASK-001 | BLOCKED |
 | 3 | TASK-003 — Seed do catálogo | PHASE-01 | HIGH | TASK-002 | BLOCKED |
 | 4 | TASK-004 — Autenticação | PHASE-01 | CRITICAL | TASK-002 | BLOCKED |
@@ -81,7 +81,9 @@ Uma TASK pode ficar `READY` somente quando:
 
 ### Status
 
-`READY`
+`FAILED`
+
+Execução: build, lint, typecheck, teste Vitest e descoberta Playwright passaram. O teste E2E apresentou uma asserção bem-sucedida, mas o processo não encerrou após o teste e foi interrompido; o gate E2E permanece falho. Falta também verificar a compatibilidade das versões com a documentação oficial para resolver PD-002. Não promover TASK-002 até corrigir e revalidar a TASK-001.
 
 ### Phase / Priority
 
