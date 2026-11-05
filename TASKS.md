@@ -19,8 +19,8 @@
 | 4 | TASK-004 — Autenticação | PHASE-01 | CRITICAL | TASK-002 | DONE |
 | 5 | TASK-005 — Checkpoint PHASE-01 | PHASE-01 | CRITICAL | TASK-003, TASK-004 | DONE |
 | 6 | TASK-006 — Design system e página inicial | PHASE-02 | HIGH | TASK-005 | IN_PROGRESS |
-| 7 | TASK-007 — Catálogo, busca e filtros | PHASE-02 | HIGH | TASK-005 | READY |
-| 8 | TASK-008 — Detalhe e SEO público | PHASE-02 | HIGH | TASK-007 | BLOCKED |
+| 7 | TASK-007 — Catálogo, busca e filtros | PHASE-02 | HIGH | TASK-005 | DONE |
+| 8 | TASK-008 — Detalhe e SEO público | PHASE-02 | HIGH | TASK-007 | READY |
 | 9 | TASK-009 — Checkpoint PHASE-02 | PHASE-02 | CRITICAL | TASK-006, TASK-008 | BLOCKED |
 | 10 | TASK-010 — Perfil e endereço | PHASE-03 | HIGH | TASK-009 | BLOCKED |
 | 11 | TASK-011 — Carrinho persistente | PHASE-03 | CRITICAL | TASK-010 | BLOCKED |
@@ -537,7 +537,9 @@ DoD global + revisão visual e acessível registrada.
 
 ### Status
 
-`READY`
+`DONE`
+
+Validação: build, lint, typecheck e 6 testes unitários passaram; 10 E2E passaram, incluindo busca case-insensitive, filtros combinados, URL, valores inválidos e disponibilidade contra PostgreSQL descartável. Consulta seleciona campos necessários e relações em lote, sem consulta por produto. As páginas de detalhe são responsabilidade da TASK-008. Incidental Changes: NONE; sem produção ou deploy.
 
 ### Phase / Priority
 
@@ -605,7 +607,7 @@ DoD global + consulta sem N+1 e seleção mínima de colunas revisada.
 
 ### Status
 
-`BLOCKED`
+`READY`
 
 ### Phase / Priority
 
