@@ -14,7 +14,7 @@
 | Ordem | TASK | Fase | Prioridade | Dependências | Estado |
 |---:|---|---|---|---|---|
 | 1 | TASK-001 — Bootstrap da aplicação | PHASE-01 | CRITICAL | NONE | DONE |
-| 2 | TASK-002 — Schema e migrations | PHASE-01 | CRITICAL | TASK-001 | BLOCKED |
+| 2 | TASK-002 — Schema e migrations | PHASE-01 | CRITICAL | TASK-001 | IN_PROGRESS |
 | 3 | TASK-003 — Seed do catálogo | PHASE-01 | HIGH | TASK-002 | BLOCKED |
 | 4 | TASK-004 — Autenticação | PHASE-01 | CRITICAL | TASK-002 | BLOCKED |
 | 5 | TASK-005 — Checkpoint PHASE-01 | PHASE-01 | CRITICAL | TASK-003, TASK-004 | BLOCKED |
@@ -167,7 +167,7 @@ DoD global + ambiente reproduzível por `pnpm` + versões registradas no lockfil
 
 ### Status
 
-`BLOCKED`
+`IN_PROGRESS`
 
 ### Phase / Priority
 
@@ -183,7 +183,7 @@ Configurar Prisma/PostgreSQL e criar schema, relações, constraints e migration
 
 ### Requisitos relacionados
 
-RF-002 a RF-012; RN-001 a RN-018; RNF-002, RNF-011; ADR-003, ADR-004, ADR-005.
+RF-002 a RF-012; RN-001 a RN-018; RNF-002, RNF-011; ADR-003, ADR-005, ADR-006 (que substitui ADR-004).
 
 ### Artefatos esperados
 
