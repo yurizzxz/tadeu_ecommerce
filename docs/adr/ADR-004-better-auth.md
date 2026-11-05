@@ -2,7 +2,7 @@
 
 ## Status
 
-ACCEPTED
+SUPERSEDED por ADR-006 (adaptador e persistência; os demais requisitos de autenticação permanecem)
 
 ## Contexto
 

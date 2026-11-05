@@ -33,7 +33,7 @@ flowchart TB
         Profile[Profile]
         Cart[Cart]
         Orders[Orders]
-        DB[Drizzle server-only]
+        DB[Prisma server-only]
     end
     PG[(Neon PostgreSQL)]
     UI --> Pages

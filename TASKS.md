@@ -173,7 +173,7 @@ DoD global + ambiente reproduzível por `pnpm` + versões registradas no lockfil
 
 ### Objetivo
 
-Configurar Drizzle/PostgreSQL e criar schema, relations, constraints e migrations iniciais para autenticação e domínio.
+Configurar Prisma/PostgreSQL e criar schema, relações, constraints e migrations iniciais para autenticação e domínio.
 
 ### Dependências
 
@@ -185,7 +185,7 @@ RF-002 a RF-012; RN-001 a RN-018; RNF-002, RNF-011; ADR-003, ADR-004, ADR-005.
 
 ### Artefatos esperados
 
-Cliente server-only, configuração Drizzle Kit, schema Better Auth compatível, tabelas de domínio, migration inicial e estratégia de banco de teste.
+Cliente server-only, configuração Prisma, schema Better Auth compatível, tabelas de domínio, migration inicial e estratégia de banco de teste.
 
 ### Allowed Changes
 
@@ -193,7 +193,8 @@ Cliente server-only, configuração Drizzle Kit, schema Better Auth compatível,
 ALLOWED_CHANGES:
 - package.json
 - pnpm-lock.yaml
-- drizzle.config.*
+- prisma.config.*
+- prisma/**
 - .env.example
 - src/db/**
 - src/features/auth/db/**
@@ -213,7 +214,7 @@ FORBIDDEN_CHANGES:
 - inserir credenciais reais;
 - implementar páginas ou Server Actions funcionais;
 - alterar cardinalidades/regras aprovadas sem ADR;
-- criar repository.
+- criar abstrações de persistência sem necessidade concreta.
 ```
 
 ### Critérios de aceitação
@@ -318,7 +319,7 @@ DoD global + PD-001/PD-003 resolvidas + seed reproduzível.
 
 ### Objetivo
 
-Integrar Better Auth com Drizzle e entregar cadastro, login, sessão, logout e proteção server-side.
+Integrar Better Auth com Prisma e entregar cadastro, login, sessão, logout e proteção server-side.
 
 ### Dependências
 
@@ -542,7 +543,7 @@ RF-002, RF-003; RN-001 a RN-004; RNF-005; UC-001, UC-002.
 
 ### Artefatos esperados
 
-Página de catálogo, schema de parâmetros, consulta Drizzle, controles acessíveis e estados vazio/erro.
+Página de catálogo, schema de parâmetros, consulta Prisma, controles acessíveis e estados vazio/erro.
 
 ### Allowed Changes
 

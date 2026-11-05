@@ -50,7 +50,7 @@ Antes de executar uma TASK:
 - não ignorar dependência;
 - não inventar requisito ou regra de negócio;
 - não alterar arquitetura sem ADR aceito;
-- não criar repository: ADR-002 aceita acesso direto ao Drizzle;
+- respeitar as camadas e os limites de persistência definidos nos ADRs aceitos;
 - não antecipar funcionalidade de TASK futura;
 - não remover teste, validação ou constraint para obter verde;
 - não confiar em `userId`, preço, total, estoque, estado ou horário vindos do cliente;
@@ -192,11 +192,11 @@ Parar e aguardar decisão.
 - Server Components fazem leituras de página;
 - Server Actions fazem mutações e são tratadas como endpoints públicos;
 - Better Auth pode usar Route Handler exigido pela biblioteca;
-- Server Actions acessam Drizzle diretamente conforme ADR-002;
-- não criar repository “para o futuro”;
-- extrair serviço/use case somente com reutilização ou complexidade comprovada e TASK/ADR apropriada;
+- organizar cada módulo em camadas de apresentação, aplicação e persistência, conforme ADR aceito;
+- usar Prisma na persistência, mantendo validação e autorização no servidor;
+- evitar interfaces e abstrações de repository sem necessidade concreta;
 - módulos não importam internals de outro módulo sem contrato claro;
-- cliente nunca importa módulo server-only, Drizzle ou segredo;
+- cliente nunca importa módulo server-only, Prisma ou segredo;
 - regra de domínio crítica precisa existir no servidor, mesmo quando UI também valida;
 - PostgreSQL é fonte de verdade.
 
@@ -216,7 +216,7 @@ Checkout e cancelamento exigem transação PostgreSQL. Baixa de estoque deve ser
 
 ## 13. Dados e migrations
 
-- usar Drizzle Kit e migrations versionadas;
+- usar Prisma Migrate e migrations versionadas;
 - nunca editar migration aplicada em ambiente compartilhado; criar nova;
 - usar `timestamptz` para instantes;
 - usar centavos inteiros para dinheiro;

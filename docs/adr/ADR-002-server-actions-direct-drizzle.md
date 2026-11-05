@@ -2,7 +2,7 @@
 
 ## Status
 
-ACCEPTED
+SUPERSEDED por ADR-006
 
 ## Contexto
 

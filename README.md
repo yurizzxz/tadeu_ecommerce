@@ -225,7 +225,7 @@ Entregar um MVP demonstrável de e-commerce que valide catálogo, autenticação
 | RNF-007 | SEO | Páginas públicas possuem metadata; páginas autenticadas não devem ser indexadas. |
 | RNF-008 | Observabilidade | Erros de servidor recebem log estruturado sem senha, token, cookie ou dados sensíveis. Logs padrão da Vercel bastam no MVP. |
 | RNF-009 | Testabilidade | Regras transacionais e validações possuem testes Vitest; fluxos críticos possuem testes Playwright. |
-| RNF-010 | Manutenibilidade | TypeScript estrito, módulos por domínio funcional, Server Actions pequenas e acesso Drizzle explícito. |
+| RNF-010 | Manutenibilidade | TypeScript estrito, módulos por domínio funcional e camadas de apresentação, aplicação e persistência. |
 | RNF-011 | Temporalidade | Instantes persistidos usam `timestamptz`; regras usam tempo do servidor; UI exibe `America/Sao_Paulo`. |
 | RNF-012 | Recuperação | Backup e disponibilidade usam capacidades contratadas do Neon; não existe mecanismo adicional no MVP. |
 | RNF-013 | Privacidade | Senhas ficam sob Better Auth; aplicação não registra credenciais, sessões ou endereço completo em logs. |
@@ -391,7 +391,7 @@ Todos os instantes usam `timestamptz`. IDs podem usar UUID gerado no servidor/ba
 
 | Tabela | Campos principais | Restrições e índices |
 |---|---|---|
-| `users` | campos exigidos pelo Better Auth, `name`, `email`, timestamps | e-mail único; schema compatível com adapter Drizzle |
+| `users` | campos exigidos pelo Better Auth, `name`, `email`, timestamps | e-mail único; schema compatível com adapter Prisma |
 | `sessions` | campos Better Auth, `user_id`, expiração | índice por usuário/token conforme schema oficial |
 | `accounts` | campos Better Auth, `user_id`, credencial | gerenciada pelo Better Auth |
 | `verifications` | campos Better Auth | presente se exigido pelo schema, mesmo sem fluxo de confirmação |
@@ -456,9 +456,9 @@ erDiagram
 
 ### Estilo
 
-Monólito modular dentro de uma aplicação Next.js App Router. Server Components executam leituras server-side. Server Actions executam mutações e acessam Drizzle diretamente. Route Handler existe somente onde Better Auth exigir transporte HTTP.
+Monólito modular dentro de uma aplicação Next.js App Router, organizado em camadas de apresentação, aplicação e persistência. Server Components executam leituras server-side; Server Actions recebem mutações e delegam às operações de aplicação. A persistência usa Prisma. Route Handler existe somente onde Better Auth exigir transporte HTTP.
 
-Essa decisão reduz camadas no MVP. O custo aceito é acoplamento das ações ao ORM e maior trabalho caso a fonte de dados mude.
+As camadas separam transporte, regras e acesso a dados. O custo aceito é maior indireção; interfaces para trocar a fonte de dados não são exigidas no MVP.
 
 ### Módulos
 
@@ -473,11 +473,11 @@ Essa decisão reduz camadas no MVP. O custo aceito é acoplamento das ações ao
 
 ### Fluxo de execução
 
-1. Página pública recebe `searchParams`, valida e consulta Drizzle no servidor.
+1. Página pública recebe `searchParams`, valida e consulta dados por operações server-side.
 2. Mutação chega a Server Action.
 3. Action valida entrada e sessão.
 4. Action deriva `userId` da sessão, nunca do cliente.
-5. Action consulta/muta Drizzle.
+5. Action chama a operação de aplicação, que usa a persistência Prisma.
 6. Mutação transacional confirma ou reverte integralmente.
 7. Action invalida/atualiza interface e retorna resultado tipado.
 
@@ -495,10 +495,11 @@ flowchart LR
     App --> RSC[Server Components]
     App --> SA[Server Actions]
     App --> Auth[Better Auth handler]
-    RSC --> Drizzle[Drizzle ORM]
-    SA --> Drizzle
-    Auth --> Drizzle
-    Drizzle --> Neon[(PostgreSQL / Neon)]
+    RSC --> Application[Camada de aplicação]
+    SA --> Application
+    Application --> Prisma[Persistência Prisma]
+    Auth --> Prisma
+    Prisma --> Neon[(PostgreSQL / Neon)]
     Vercel[Vercel logs] -. observa .-> App
     Images[Imagens externas] --> Browser
 ```
@@ -531,8 +532,8 @@ Não existe API pública própria no MVP. Leituras usam Server Components; muta�
 | React + TypeScript estrito | interface e tipos | ecossistema e segurança de refatoração | tipos não substituem validação runtime |
 | Tailwind CSS | estilos | composição rápida e consistente | exige disciplina de tokens/componentes |
 | shadcn/ui | base acessível de componentes | código controlado pelo projeto | componentes precisam adaptação visual |
-| Better Auth | autenticação | e-mail/senha, sessão e adapter Drizzle | schema e integração seguem contrato da biblioteca |
-| Drizzle ORM + Drizzle Kit | acesso e migrations | SQL explícito, tipagem e transações | actions ficam acopladas ao ORM por decisão consciente |
+| Better Auth | autenticação | e-mail/senha, sessão e adapter Prisma | schema e integração seguem contrato da biblioteca |
+| Prisma ORM + Prisma Migrate | acesso e migrations | tipagem, migrations e transações | persistência depende do ORM; algumas constraints exigem SQL na migration |
 | PostgreSQL no Neon | persistência | constraints, transações e branches isoladas | dependência de serviço gerenciado |
 | Vitest | testes de regra e integração | feedback rápido e bom suporte TypeScript | banco de integração exige isolamento |
 | Playwright | testes E2E | valida fluxos reais e acessibilidade automatizável | mais lento que testes unitários |
@@ -543,10 +544,10 @@ Versões não são fixadas neste documento. A TASK de bootstrap deve registrar v
 ## 14. Estratégia de segurança
 
 - habilitar e-mail/senha no Better Auth sem exigir verificação;
-- usar schema oficial compatível com Drizzle/PostgreSQL;
+- usar schema oficial compatível com Prisma/PostgreSQL;
 - derivar usuário exclusivamente da sessão server-side;
 - tratar toda Server Action como endpoint público alcançável por POST;
-- validar entrada em runtime antes de acessar Drizzle;
+- validar entrada em runtime antes de acessar a persistência;
 - aplicar autorização por propriedade em carrinho, perfil, endereço e pedido;
 - nunca aceitar preço, total, estoque, estado ou `userId` como verdade do cliente;
 - usar transação e condições SQL para concorrência de estoque/cancelamento;
@@ -596,7 +597,7 @@ Build, lint, typecheck, testes Vitest, testes de integração, Playwright, crit�
 | corrida permite estoque negativo | técnico | média | alto | baixa condicional + transação + teste concorrente |
 | cancelamento duplica reposição | técnico | média | alto | transição condicional de estado + transação |
 | Server Actions crescem e misturam responsabilidades | arquitetura | média | médio | manter actions curtas; extrair serviço apenas quando complexidade real surgir |
-| troca futura de ORM exige refatoração | arquitetura | média | médio | risco aceito; sem repository no MVP |
+| troca futura de ORM exige refatoração | arquitetura | média | médio | risco aceito; sem interfaces de repository para troca hipotética |
 | URLs externas de imagem falham | integração | média | baixo | domínio restrito + fallback |
 | ausência de rate limiting expõe autenticação a abuso | segurança | baixa no portfólio | médio | risco aceito no MVP; revisar antes de uso público relevante |
 | banco de teste contamina desenvolvimento | operacional | baixa | alto | branch Neon separada e URL exclusiva |
@@ -615,10 +616,11 @@ Build, lint, typecheck, testes Vitest, testes de integração, Playwright, crit�
 ## 18. ADRs
 
 - [ADR-001 — Monólito modular com Next.js App Router](docs/adr/ADR-001-nextjs-modular-monolith.md)
-- [ADR-002 — Server Actions e acesso direto ao Drizzle](docs/adr/ADR-002-server-actions-direct-drizzle.md)
+- [ADR-002 — Server Actions e acesso direto ao Drizzle](docs/adr/ADR-002-server-actions-direct-drizzle.md) — substituído pelo ADR-006
 - [ADR-003 — PostgreSQL gerenciado pelo Neon](docs/adr/ADR-003-postgresql-neon.md)
-- [ADR-004 — Better Auth com e-mail e senha](docs/adr/ADR-004-better-auth.md)
+- [ADR-004 — Better Auth com e-mail e senha](docs/adr/ADR-004-better-auth.md) — substituído pelo ADR-006
 - [ADR-005 — Checkout e cancelamento transacionais](docs/adr/ADR-005-transactional-orders.md)
+- [ADR-006 — Prisma e arquitetura em camadas](docs/adr/ADR-006-prisma-layered-architecture.md)
 
 ## 19. Matriz de rastreabilidade
 
@@ -655,8 +657,8 @@ Nenhuma pendência atual bloqueia o início da TASK-001.
 - [Next.js App Router](https://nextjs.org/docs/app)
 - [Next.js: mutação de dados e Server Actions](https://nextjs.org/docs/app/getting-started/mutating-data)
 - [Better Auth: e-mail e senha](https://better-auth.com/docs/authentication/email-password)
-- [Better Auth: adapter Drizzle](https://better-auth.com/docs/adapters/drizzle)
-- [Drizzle: transações](https://orm.drizzle.team/docs/transactions)
+- [Better Auth: adapter Prisma](https://www.better-auth.com/docs/adapters/prisma)
+- [Prisma: transações](https://www.prisma.io/docs/orm/prisma-client/queries/transactions)
 - [Neon: workflow com branches](https://neon.com/docs/get-started-with-neon/workflow-primer)
 
 ## 22. Responsabilidade documental

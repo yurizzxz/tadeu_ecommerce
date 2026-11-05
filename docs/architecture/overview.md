@@ -6,13 +6,13 @@ Traduzir requisitos da DevStore em fronteiras implementáveis. Este documento de
 
 ## 2. Contexto
 
-A aplicação roda como monólito modular Next.js na Vercel. Browser acessa páginas públicas e privadas. Next.js executa Server Components, Server Actions e handler do Better Auth. Drizzle acessa PostgreSQL no Neon. Imagens vêm de domínios externos permitidos.
+A aplicação roda como monólito modular Next.js na Vercel. Browser acessa páginas públicas e privadas. Next.js executa Server Components, Server Actions e handler do Better Auth. Prisma acessa PostgreSQL no Neon. Imagens vêm de domínios externos permitidos.
 
 ## 3. Fronteiras funcionais
 
 ### Auth
 
-- configura Better Auth e adapter Drizzle;
+- configura Better Auth e adapter Prisma;
 - fornece leitura server-side da sessão;
 - mantém handler HTTP exigido pela biblioteca;
 - não conhece carrinho ou pedidos.
@@ -49,7 +49,7 @@ A aplicação roda como monólito modular Next.js na Vercel. Browser acessa pág
 
 ### DB
 
-- expõe cliente Drizzle server-only;
+- expõe cliente Prisma server-only;
 - define schema e relações;
 - contém migrations versionadas e seed idempotente;
 - não pode ser importado em Client Components.
@@ -83,6 +83,8 @@ tests/
 
 Estrutura é direção, não autorização automática. Cada TASK define caminhos permitidos.
 
+Cada módulo separa apresentação (páginas e actions), aplicação (operações e regras) e persistência (consultas e transações Prisma). A aplicação coordena a transação sem dividi-la entre operações independentes. A estrutura física deve acompanhar a necessidade de cada TASK, sem interfaces ou abstrações criadas apenas para uma eventual troca de banco.
+
 ## 5. Regras de Server Components
 
 - usar para consultas de páginas e metadata;
@@ -101,7 +103,7 @@ Ordem mínima:
 3. negar ausência de sessão;
 4. derivar `userId` da sessão;
 5. validar propriedade e invariantes;
-6. executar Drizzle/transação;
+6. chamar a operação de aplicação, que coordena a persistência e a transação;
 7. invalidar dados afetados;
 8. retornar resultado serializável e seguro.
 

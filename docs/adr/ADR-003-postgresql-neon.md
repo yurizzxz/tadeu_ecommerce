@@ -21,7 +21,7 @@ Escolher persistência que suporte constraints, concorrência, ambiente de teste
 
 ## Decisão
 
-Usar PostgreSQL gerenciado pelo Neon desde a versão 1.0. Desenvolvimento/teste usam conexão separada, preferencialmente uma branch Neon dedicada. Drizzle Kit controla migrations e seed controlado popula catálogo.
+Usar PostgreSQL gerenciado pelo Neon desde a versão 1.0. Desenvolvimento/teste usam conexão separada, preferencialmente uma branch Neon dedicada. Prisma Migrate controla migrations e seed controlado popula catálogo, conforme ADR-006.
 
 ## Justificativa
 
