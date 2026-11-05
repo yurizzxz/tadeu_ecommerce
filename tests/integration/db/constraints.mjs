@@ -25,18 +25,30 @@ async function main() {
     const suffix = randomUUID();
     await client.query('INSERT INTO categories (id, name, slug, updated_at) VALUES ($1, $2, $2, now())', [category, suffix]);
     await client.query('INSERT INTO brands (id, name, slug, updated_at) VALUES ($1, $2, $2, now())', [brand, suffix]);
-    await client.query("SAVEPOINT invalid_product");
-    let rejected = false;
-    try {
-      await client.query('INSERT INTO products (id, category_id, brand_id, name, slug, sku, description, price_in_cents, stock, image_url, specifications, updated_at) VALUES ($1,$2,$3,$4,$4,$4,$4,-1,0,$4,$5,now())', [randomUUID(), category, brand, suffix, "{}"]);
-    } catch (error) {
-      if (error.code !== "23514") throw error;
-      rejected = true;
-    }
-    await client.query("ROLLBACK TO SAVEPOINT invalid_product");
-    if (!rejected) throw new Error("Preço negativo foi aceito");
+    const product = randomUUID();
+    await client.query('INSERT INTO products (id, category_id, brand_id, name, slug, sku, description, price_in_cents, stock, image_url, specifications, updated_at) VALUES ($1,$2,$3,$4,$4,$4,$4,100,1,$4,$5,now())', [product, category, brand, suffix, "{}"]);
+    const user = randomUUID();
+    await client.query('INSERT INTO users (id, name, email, "updatedAt") VALUES ($1, $1, $2, now())', [user, `${suffix}@example.invalid`]);
+    const cart = randomUUID();
+    await client.query('INSERT INTO carts (id, user_id, updated_at) VALUES ($1, $2, now())', [cart, user]);
+    const order = randomUUID();
+    await client.query('INSERT INTO orders (id, user_id, status, subtotal_in_cents, total_in_cents, address_snapshot, updated_at) VALUES ($1,$2,\'FINALIZED\',100,100,$3,now())', [order, user, "{}"]);
+    const expectReject = async (sql, params, code) => {
+      await client.query("SAVEPOINT invalid_value");
+      let rejected = false;
+      try { await client.query(sql, params); } catch (error) { if (error.code !== code) throw error; rejected = true; }
+      await client.query("ROLLBACK TO SAVEPOINT invalid_value");
+      if (!rejected) throw new Error("Valor inválido foi aceito");
+    };
+    await expectReject('UPDATE products SET price_in_cents = -1 WHERE id = $1', [product], "23514");
+    await expectReject('UPDATE products SET stock = -1 WHERE id = $1', [product], "23514");
+    await expectReject('INSERT INTO cart_items (id, cart_id, product_id, quantity, updated_at) VALUES ($1,$2,$3,0,now())', [randomUUID(), cart, product], "23514");
+    await expectReject('UPDATE orders SET total_in_cents = -1 WHERE id = $1', [order], "23514");
+    await expectReject('INSERT INTO order_items (id,order_id,product_name,product_sku,unit_price_in_cents,quantity,line_total_in_cents) VALUES ($1,$2,$3,$3,0,0,0)', [randomUUID(), order, suffix], "23514");
+    await expectReject('INSERT INTO addresses (id,user_id,postal_code,street,number,neighborhood,city,state,updated_at) VALUES ($1,$2,$3,$3,$3,$3,$3,\'X\',now())', [randomUUID(), user, suffix], "23514");
+    await expectReject('INSERT INTO carts (id,user_id,updated_at) VALUES ($1,$2,now())', [randomUUID(), user], "23505");
     await client.query("ROLLBACK");
-    console.log("Constraints e índices encontrados; preço negativo rejeitado em transação revertida.");
+    console.log("Constraints e índices encontrados; valores inválidos e duplicidade rejeitados em transação revertida.");
   } finally { await client.end(); }
 }
 main().catch(() => { console.error("Falha na verificação das constraints"); process.exitCode = 1; });

@@ -14,8 +14,8 @@
 | Ordem | TASK | Fase | Prioridade | Dependências | Estado |
 |---:|---|---|---|---|---|
 | 1 | TASK-001 — Bootstrap da aplicação | PHASE-01 | CRITICAL | NONE | DONE |
-| 2 | TASK-002 — Schema e migrations | PHASE-01 | CRITICAL | TASK-001 | IN_PROGRESS |
-| 3 | TASK-003 — Seed do catálogo | PHASE-01 | HIGH | TASK-002 | BLOCKED |
+| 2 | TASK-002 — Schema e migrations | PHASE-01 | CRITICAL | TASK-001 | DONE |
+| 3 | TASK-003 — Seed do catálogo | PHASE-01 | HIGH | TASK-002 | READY |
 | 4 | TASK-004 — Autenticação | PHASE-01 | CRITICAL | TASK-002 | BLOCKED |
 | 5 | TASK-005 — Checkpoint PHASE-01 | PHASE-01 | CRITICAL | TASK-003, TASK-004 | BLOCKED |
 | 6 | TASK-006 — Design system e página inicial | PHASE-02 | HIGH | TASK-005 | BLOCKED |
@@ -167,7 +167,9 @@ DoD global + ambiente reproduzível por `pnpm` + versões registradas no lockfil
 
 ### Status
 
-`IN_PROGRESS`
+`DONE`
+
+Validação: migration aplicada no banco descartável inicialmente vazio; schema de autenticação comparado aos campos e tipos do Better Auth 1.7.16; constraints e índices inspecionados e valores inválidos/duplicidade rejeitados em transação revertida. Build, lint, typecheck e Vitest passaram. E2E N/A: nenhum fluxo de interface alterado. Segurança: URL de teste separada, sem credenciais no repositório. Incidental: `.gitignore` para cliente gerado/relatórios e `pnpm-workspace.yaml` para scripts do Prisma. Sem deploy ou acesso a produção.
 
 ### Phase / Priority
 
@@ -241,7 +243,7 @@ DoD global + migration versionada + nenhuma execução em produção.
 
 ### Status
 
-`BLOCKED`
+`READY`
 
 ### Phase / Priority
 
