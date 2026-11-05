@@ -22,7 +22,7 @@
 | 7 | TASK-007 — Catálogo, busca e filtros | PHASE-02 | HIGH | TASK-005 | DONE |
 | 8 | TASK-008 — Detalhe e SEO público | PHASE-02 | HIGH | TASK-007 | DONE |
 | 9 | TASK-009 — Checkpoint PHASE-02 | PHASE-02 | CRITICAL | TASK-006, TASK-008 | DONE |
-| 10 | TASK-010 — Perfil e endereço | PHASE-03 | HIGH | TASK-009 | BLOCKED |
+| 10 | TASK-010 — Perfil e endereço | PHASE-03 | HIGH | TASK-009 | DONE |
 | 11 | TASK-011 — Carrinho persistente | PHASE-03 | CRITICAL | TASK-010 | BLOCKED |
 | 12 | TASK-012 — Revisão e checkout transacional | PHASE-03 | CRITICAL | TASK-011 | BLOCKED |
 | 13 | TASK-013 — Histórico e cancelamento | PHASE-03 | CRITICAL | TASK-012 | BLOCKED |
@@ -741,7 +741,9 @@ DoD global + relatório + TASK-010 promovida somente após `DONE`.
 
 ### Status
 
-`BLOCKED`
+`DONE`
+
+Validação: build, lint, typecheck, 9 testes unitários, constraints em PostgreSQL de teste e 14 E2E públicos/perfil passaram. Perfil verificado com sessão ausente, dois usuários, userId adulterado e tentativa de segundo endereço. Incidental: link em `src/app/(auth)/conta/page.tsx` para acesso ao perfil. Sem produção ou deploy.
 
 ### Phase / Priority
 
