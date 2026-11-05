@@ -21,7 +21,7 @@
 | 6 | TASK-006 — Design system e página inicial | PHASE-02 | HIGH | TASK-005 | DONE |
 | 7 | TASK-007 — Catálogo, busca e filtros | PHASE-02 | HIGH | TASK-005 | DONE |
 | 8 | TASK-008 — Detalhe e SEO público | PHASE-02 | HIGH | TASK-007 | DONE |
-| 9 | TASK-009 — Checkpoint PHASE-02 | PHASE-02 | CRITICAL | TASK-006, TASK-008 | READY |
+| 9 | TASK-009 — Checkpoint PHASE-02 | PHASE-02 | CRITICAL | TASK-006, TASK-008 | DONE |
 | 10 | TASK-010 — Perfil e endereço | PHASE-03 | HIGH | TASK-009 | BLOCKED |
 | 11 | TASK-011 — Carrinho persistente | PHASE-03 | CRITICAL | TASK-010 | BLOCKED |
 | 12 | TASK-012 — Revisão e checkout transacional | PHASE-03 | CRITICAL | TASK-011 | BLOCKED |
@@ -677,7 +677,9 @@ DoD global + SEO básico verificado.
 
 ### Status
 
-`READY`
+`DONE`
+
+Checkpoint: build, lint, typecheck, 6 testes unitários, verificação do catálogo em PostgreSQL de teste e 13 testes E2E públicos passaram. Verificados home, catálogo e detalhe em 320 e 1280 px, navegação inicial e busca por teclado, 404, canonical e noindex. Contraste dos índices de categoria corrigido: 6,33:1 sobre branco e 5,76:1 sobre o fundo de hover. A validação não constitui auditoria WCAG completa ou teste com leitor de tela; a TASK-016 prevê consolidação adicional. Incidental Changes: NONE. A TASK-010 permanece BLOCKED até autorização específica, exigida pela Definition of Ready global.
 
 ### Phase / Priority
 
