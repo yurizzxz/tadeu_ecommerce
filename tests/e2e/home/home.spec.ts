@@ -17,3 +17,12 @@ test("apresenta fallback quando uma imagem falha", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByText("Imagem indisponível").first()).toBeVisible();
 });
+
+test("navega por teclado e abre a categoria escolhida", async ({ page }) => {
+  await page.goto("/");
+  await page.keyboard.press("Tab");
+  await expect(page.getByRole("link", { name: "Pular para o conteúdo" })).toBeFocused();
+  await page.getByRole("link", { name: /Processadores/ }).click();
+  await expect(page).toHaveURL(/category=processadores/);
+  await expect(page.getByRole("heading", { name: "Ryzen 5 5600" })).toBeVisible();
+});

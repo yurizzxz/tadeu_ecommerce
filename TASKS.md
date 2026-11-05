@@ -18,10 +18,10 @@
 | 3 | TASK-003 — Seed do catálogo | PHASE-01 | HIGH | TASK-002 | DONE |
 | 4 | TASK-004 — Autenticação | PHASE-01 | CRITICAL | TASK-002 | DONE |
 | 5 | TASK-005 — Checkpoint PHASE-01 | PHASE-01 | CRITICAL | TASK-003, TASK-004 | DONE |
-| 6 | TASK-006 — Design system e página inicial | PHASE-02 | HIGH | TASK-005 | IN_PROGRESS |
+| 6 | TASK-006 — Design system e página inicial | PHASE-02 | HIGH | TASK-005 | DONE |
 | 7 | TASK-007 — Catálogo, busca e filtros | PHASE-02 | HIGH | TASK-005 | DONE |
 | 8 | TASK-008 — Detalhe e SEO público | PHASE-02 | HIGH | TASK-007 | DONE |
-| 9 | TASK-009 — Checkpoint PHASE-02 | PHASE-02 | CRITICAL | TASK-006, TASK-008 | BLOCKED |
+| 9 | TASK-009 — Checkpoint PHASE-02 | PHASE-02 | CRITICAL | TASK-006, TASK-008 | READY |
 | 10 | TASK-010 — Perfil e endereço | PHASE-03 | HIGH | TASK-009 | BLOCKED |
 | 11 | TASK-011 — Carrinho persistente | PHASE-03 | CRITICAL | TASK-010 | BLOCKED |
 | 12 | TASK-012 — Revisão e checkout transacional | PHASE-03 | CRITICAL | TASK-011 | BLOCKED |
@@ -465,9 +465,9 @@ DoD global + relatório de checkpoint + TASK-006 promovida a `READY` somente dep
 
 ### Status
 
-`IN_PROGRESS`
+`DONE`
 
-Execução coordenada com TASK-007 e TASK-008: a conclusão desta TASK depende da validação dos destinos da navegação implementados nas tarefas seguintes. Build e testes de renderização da home passaram em 320 px e 1280 px, incluindo fallback de imagem; navegação ainda pendente.
+Execução coordenada com TASK-007 e TASK-008: build, lint, typecheck e testes E2E passaram; home revisada visualmente em 320 px e 1280 px, com fallback, foco inicial de teclado e navegação de categoria e produto verificados. Cores principais de texto verificadas em contraste sobre branco (mínimo 4,56:1). Mudanças incidentais: remoção da página técnica anterior para evitar rotas duplicadas e atualização do teste de bootstrap. Sem produção ou deploy.
 
 ### Phase / Priority
 
@@ -677,7 +677,7 @@ DoD global + SEO básico verificado.
 
 ### Status
 
-`BLOCKED`
+`READY`
 
 ### Phase / Priority
 
