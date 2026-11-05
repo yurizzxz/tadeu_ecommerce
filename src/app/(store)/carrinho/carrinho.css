@@ -1,0 +1,12 @@
+.cart-page { max-width: 960px; padding-block: 48px 96px; }
+.cart-page h1 { font-size: 2rem; margin-bottom: 40px; }
+.cart-items { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.cart-items li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; border-bottom: 1px solid var(--line); padding-block: 24px; }
+.cart-items h2 { font-size: 1.125rem; }
+.cart-items h2 a { text-decoration: underline; }
+.cart-controls form { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; }
+.cart-controls label { display: grid; gap: 6px; font-weight: 700; }
+.cart-controls input { width: 80px; min-height: 44px; padding-inline: 8px; border: 1px solid #a9bbb5; border-radius: 4px; }
+.cart-controls button { cursor: pointer; }
+.cart-remove { margin-top: 12px; padding: 4px 0; border: 0; background: none; text-decoration: underline; }
+.cart-total { margin-top: 28px; font-size: 1.25rem; font-weight: 700; }

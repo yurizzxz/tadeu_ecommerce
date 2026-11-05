@@ -23,7 +23,7 @@
 | 8 | TASK-008 — Detalhe e SEO público | PHASE-02 | HIGH | TASK-007 | DONE |
 | 9 | TASK-009 — Checkpoint PHASE-02 | PHASE-02 | CRITICAL | TASK-006, TASK-008 | DONE |
 | 10 | TASK-010 — Perfil e endereço | PHASE-03 | HIGH | TASK-009 | DONE |
-| 11 | TASK-011 — Carrinho persistente | PHASE-03 | CRITICAL | TASK-010 | BLOCKED |
+| 11 | TASK-011 — Carrinho persistente | PHASE-03 | CRITICAL | TASK-010 | DONE |
 | 12 | TASK-012 — Revisão e checkout transacional | PHASE-03 | CRITICAL | TASK-011 | BLOCKED |
 | 13 | TASK-013 — Histórico e cancelamento | PHASE-03 | CRITICAL | TASK-012 | BLOCKED |
 | 14 | TASK-014 — Checkpoint PHASE-03 | PHASE-03 | CRITICAL | TASK-013 | BLOCKED |
@@ -811,7 +811,9 @@ DoD global + nenhum dado sensível nos logs.
 
 ### Status
 
-`BLOCKED`
+`DONE`
+
+Validação: build, lint, typecheck, 11 testes unitários e 15 E2E passaram. O E2E usa PostgreSQL de teste e verifica concorrência de adições, disponibilidade, limite de estoque, persistência entre sessões, isolamento e itemId adulterado. A constraint única foi verificada na TASK-010. Incidental: integração mínima do CTA em `src/app/(public)/produtos/[slug]/page.tsx`. Sem produção ou deploy.
 
 ### Phase / Priority
 

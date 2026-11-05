@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { ProductImage } from "@/components/product-image";
 import { getProduct } from "@/features/catalog/queries/product";
 import { getSession } from "@/lib/auth/server";
+import { AddToCart } from "@/features/cart/components/cart-forms";
 import "./produto.css";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -24,7 +25,7 @@ export default async function ProductPage({ params }: Props) {
     <Link className="back-link" href="/produtos"><ArrowLeft size={16} aria-hidden="true" /> Voltar para produtos</Link>
     <div className="detail-grid"><div className="detail-image"><ProductImage src={product.imageUrl} alt={product.name} /></div>
       <div className="detail-content"><p className="section-kicker">{product.category.name} / {product.brand.name}</p><h1>{product.name}</h1><p className="detail-sku">SKU: {product.sku}</p><p className="detail-price">{new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(product.priceInCents / 100)}</p><p className={product.stock > 0 ? "availability" : "availability unavailable"}>{product.stock > 0 ? "Disponível" : "Indisponível"}</p><p className="detail-description">{product.description}</p>
-        {product.stock === 0 ? <button className="button detail-button" disabled>Produto indisponível</button> : session ? <><button className="button detail-button" disabled>Adicionar ao carrinho</button><p className="detail-note">Carrinho disponível em breve.</p></> : <Link href="/entrar" className="button button-primary">Entre para adicionar ao carrinho</Link>}
+        {product.stock === 0 ? <button className="button detail-button" disabled>Produto indisponível</button> : session ? <AddToCart productId={product.id} /> : <Link href="/entrar" className="button button-primary">Entre para adicionar ao carrinho</Link>}
       </div></div>
     <section className="detail-specs"><h2>Especificações</h2>{specs.length ? <dl>{specs.map(([key, value]) => <div key={key}><dt>{key.replace(/([A-Z])/g, " $1")}</dt><dd>{Array.isArray(value) ? value.join(", ") : typeof value === "object" && value !== null ? JSON.stringify(value) : String(value ?? "—")}</dd></div>)}</dl> : <p>Especificações indisponíveis.</p>}</section>
   </main>;
