@@ -15,7 +15,7 @@
 |---:|---|---|---|---|---|
 | 1 | TASK-001 — Bootstrap da aplicação | PHASE-01 | CRITICAL | NONE | DONE |
 | 2 | TASK-002 — Schema e migrations | PHASE-01 | CRITICAL | TASK-001 | DONE |
-| 3 | TASK-003 — Seed do catálogo | PHASE-01 | HIGH | TASK-002 | READY |
+| 3 | TASK-003 — Seed do catálogo | PHASE-01 | HIGH | TASK-002 | DONE |
 | 4 | TASK-004 — Autenticação | PHASE-01 | CRITICAL | TASK-002 | BLOCKED |
 | 5 | TASK-005 — Checkpoint PHASE-01 | PHASE-01 | CRITICAL | TASK-003, TASK-004 | BLOCKED |
 | 6 | TASK-006 — Design system e página inicial | PHASE-02 | HIGH | TASK-005 | BLOCKED |
@@ -243,7 +243,9 @@ DoD global + migration versionada + nenhuma execução em produção.
 
 ### Status
 
-`READY`
+`DONE`
+
+Validação: seed demonstrativo executado duas vezes no PostgreSQL descartável; contagem de 10 produtos ativos, unicidade, preços/estoque e relações conferidos. Build, lint e typecheck passaram; fallback implementado, mas ainda não exercitado em página real. E2E N/A: nenhuma jornada de usuário alterada. Segurança: seed usa exclusivamente URL de teste e não executa em produção. Mudanças incidentais: `tsx`, lockfile e permissão do script esbuild, necessários para executar seed TypeScript; configurações do domínio de imagem e documentação previstas na TASK.
 
 ### Phase / Priority
 

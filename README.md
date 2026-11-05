@@ -645,9 +645,9 @@ Build, lint, typecheck, testes Vitest, testes de integração, Playwright, crit�
 
 | ID | Descrição | Impacto | Itens afetados | Condição de resolução |
 |---|---|---|---|---|
-| PD-001 | Definir os 10 produtos, marcas, categorias, especificações e URLs de imagem exatos. | baixo | seed, catálogo | resolver durante TASK-003 sem alterar regras |
+| PD-001 | Definir os 10 produtos, marcas, categorias, especificações e URLs de imagem exatos. | baixo | seed, catálogo | resolvido na TASK-003: dados demonstrativos em `src/db/seed/catalog.ts`, com imagens placeholder identificadas pelo nome |
 | PD-002 | Fixar versões compatíveis das dependências. | médio | bootstrap, auth, testes | resolver na TASK-001 com documentação oficial e lockfile |
-| PD-003 | Definir domínio externo permitido para imagens. | baixo | Next Image, seed | resolver na TASK-003 |
+| PD-003 | Definir domínio externo permitido para imagens. | baixo | Next Image, seed | resolvido na TASK-003: `https://placehold.co/800x800/png`, com fallback para falha de imagem |
 | PD-004 | Definir variáveis e limites do plano Neon/Vercel usados no ambiente real. | baixo no desenvolvimento | operação | resolver antes de publicação; deploy não autorizado pelo planejamento |
 
 Nenhuma pendência atual bloqueia o início da TASK-001.
