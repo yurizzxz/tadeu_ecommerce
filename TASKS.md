@@ -16,8 +16,8 @@
 | 1 | TASK-001 — Bootstrap da aplicação | PHASE-01 | CRITICAL | NONE | DONE |
 | 2 | TASK-002 — Schema e migrations | PHASE-01 | CRITICAL | TASK-001 | DONE |
 | 3 | TASK-003 — Seed do catálogo | PHASE-01 | HIGH | TASK-002 | DONE |
-| 4 | TASK-004 — Autenticação | PHASE-01 | CRITICAL | TASK-002 | BLOCKED |
-| 5 | TASK-005 — Checkpoint PHASE-01 | PHASE-01 | CRITICAL | TASK-003, TASK-004 | BLOCKED |
+| 4 | TASK-004 — Autenticação | PHASE-01 | CRITICAL | TASK-002 | DONE |
+| 5 | TASK-005 — Checkpoint PHASE-01 | PHASE-01 | CRITICAL | TASK-003, TASK-004 | READY |
 | 6 | TASK-006 — Design system e página inicial | PHASE-02 | HIGH | TASK-005 | BLOCKED |
 | 7 | TASK-007 — Catálogo, busca e filtros | PHASE-02 | HIGH | TASK-006 | BLOCKED |
 | 8 | TASK-008 — Detalhe e SEO público | PHASE-02 | HIGH | TASK-007 | BLOCKED |
@@ -317,7 +317,9 @@ DoD global + PD-001/PD-003 resolvidas + seed reproduzível.
 
 ### Status
 
-`BLOCKED`
+`DONE`
+
+Validação: build, lint, typecheck e 3 testes unitários passaram; Playwright executou cadastro, sessão, logout, login com e-mail em maiúsculas, duplicidade, dados inválidos e sessão ausente no PostgreSQL descartável. Endpoint de edição fora do escopo foi verificado como indisponível. Regressão E2E: 3 testes passaram. Um teste inicial expôs senha de teste temporária na URL antes da hidratação; formulário corrigido para POST e fluxo revalidado. Sem deploy ou produção. Incidental Changes: NONE.
 
 ### Phase / Priority
 
@@ -333,7 +335,7 @@ Integrar Better Auth com Prisma e entregar cadastro, login, sessão, logout e pr
 
 ### Requisitos relacionados
 
-RF-005; RN-005; RNF-001, RNF-013; UC-004; ADR-004.
+RF-005; RN-005; RNF-001, RNF-013; UC-004; ADR-006 (que substitui ADR-004).
 
 ### Artefatos esperados
 
@@ -395,7 +397,7 @@ DoD global + schema/configuração coerentes com documentação oficial fixada.
 
 ### Status
 
-`BLOCKED`
+`READY`
 
 ### Phase / Priority
 
@@ -411,7 +413,7 @@ Validar fundação antes de liberar catálogo.
 
 ### Requisitos relacionados
 
-ADR-001 a ADR-005; RNF-001, RNF-002, RNF-009 a RNF-013.
+ADR-001, ADR-003, ADR-005, ADR-006; RNF-001, RNF-002, RNF-009 a RNF-013.
 
 ### Artefatos esperados
 
