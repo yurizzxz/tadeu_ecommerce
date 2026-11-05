@@ -48,6 +48,8 @@ test("produto sem estoque aparece e é removido pelo filtro de disponibilidade",
     await page.getByLabel("Somente disponíveis").check();
     await page.getByRole("button", { name: "Aplicar filtros" }).click();
     await expect(page.getByText("Nenhum produto encontrado.")).toBeVisible();
+    await page.goto(`/produtos/${slug}`);
+    await expect(page.getByRole("button", { name: "Produto indisponível" })).toBeDisabled();
   } finally {
     await db.query("DELETE FROM public.products WHERE id = $1 AND slug = $2", [id, slug]);
     await db.end();

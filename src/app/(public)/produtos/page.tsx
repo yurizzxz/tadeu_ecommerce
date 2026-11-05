@@ -1,10 +1,15 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { ProductImage } from "@/components/product-image";
 import { getCatalog } from "@/features/catalog/queries/catalog";
 import { parseCatalogParams } from "@/features/catalog/queries/params";
 import "./produtos.css";
 
 export const dynamic = "force-dynamic";
+export async function generateMetadata({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }): Promise<Metadata> {
+  const params = await searchParams;
+  return { title: "Produtos | DevStore", description: "Explore componentes de informática na DevStore.", alternates: { canonical: "/produtos" }, ...(Object.keys(params).length ? { robots: { index: false, follow: true } } : {}) };
+}
 export default async function CatalogPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const filters = parseCatalogParams(await searchParams);
   let data: Awaited<ReturnType<typeof getCatalog>>;
