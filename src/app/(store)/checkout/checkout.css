@@ -1,0 +1,12 @@
+.checkout-page { max-width: 760px; padding-block: 48px 96px; }
+.checkout-page h1 { font-size: 2rem; margin-bottom: 40px; }
+.checkout-page section { border-top: 1px solid var(--line); padding-block: 24px; }
+.checkout-page h2 { font-size: 1.25rem; }
+.checkout-page a { text-decoration: underline; }
+.checkout-page ul { list-style: none; padding: 0; margin: 0; }
+.checkout-page li { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-block: 10px; }
+.checkout-page li p { width: 100%; margin: 0; }
+.checkout-total { font-size: 1.25rem; font-weight: 700; }
+.checkout-page button { border: 0; cursor: pointer; }
+.checkout-page button:disabled { opacity: .65; cursor: not-allowed; }
+.checkout-page form p { margin-top: 16px; }

@@ -24,7 +24,7 @@
 | 9 | TASK-009 — Checkpoint PHASE-02 | PHASE-02 | CRITICAL | TASK-006, TASK-008 | DONE |
 | 10 | TASK-010 — Perfil e endereço | PHASE-03 | HIGH | TASK-009 | DONE |
 | 11 | TASK-011 — Carrinho persistente | PHASE-03 | CRITICAL | TASK-010 | DONE |
-| 12 | TASK-012 — Revisão e checkout transacional | PHASE-03 | CRITICAL | TASK-011 | BLOCKED |
+| 12 | TASK-012 — Revisão e checkout transacional | PHASE-03 | CRITICAL | TASK-011 | DONE |
 | 13 | TASK-013 — Histórico e cancelamento | PHASE-03 | CRITICAL | TASK-012 | BLOCKED |
 | 14 | TASK-014 — Checkpoint PHASE-03 | PHASE-03 | CRITICAL | TASK-013 | BLOCKED |
 | 15 | TASK-015 — Hardening de testes | PHASE-04 | HIGH | TASK-014 | BLOCKED |
@@ -881,7 +881,9 @@ DoD global + autorização server-side comprovada.
 
 ### Status
 
-`BLOCKED`
+`DONE`
+
+Validação: build, lint, typecheck, 13 testes unitários e 16 E2E passaram. Em PostgreSQL de teste, o checkout verificou rollback após baixa intermediária, mudanças de preço e estoque, snapshots, limpeza do carrinho, parâmetros adulterados e concorrência pelo último item. O teste aguarda a janela de limite de cadastros do Better Auth para não afetar o teste seguinte. Mudança incidental: link direto para revisão em `src/app/(store)/carrinho/page.tsx`. Por pedido explícito do usuário, `.env.example` e `CONTINUIDADE.md` também foram atualizados/criados. Sem produção ou deploy.
 
 ### Phase / Priority
 
