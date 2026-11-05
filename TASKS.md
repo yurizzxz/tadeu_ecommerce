@@ -13,7 +13,7 @@
 
 | Ordem | TASK | Fase | Prioridade | Dependências | Estado |
 |---:|---|---|---|---|---|
-| 1 | TASK-001 — Bootstrap da aplicação | PHASE-01 | CRITICAL | NONE | FAILED |
+| 1 | TASK-001 — Bootstrap da aplicação | PHASE-01 | CRITICAL | NONE | DONE |
 | 2 | TASK-002 — Schema e migrations | PHASE-01 | CRITICAL | TASK-001 | BLOCKED |
 | 3 | TASK-003 — Seed do catálogo | PHASE-01 | HIGH | TASK-002 | BLOCKED |
 | 4 | TASK-004 — Autenticação | PHASE-01 | CRITICAL | TASK-002 | BLOCKED |
@@ -81,9 +81,9 @@ Uma TASK pode ficar `READY` somente quando:
 
 ### Status
 
-`FAILED`
+`DONE`
 
-Execução: build, lint, typecheck, teste Vitest e descoberta Playwright passaram. O teste E2E apresentou uma asserção bem-sucedida, mas o processo não encerrou após o teste e foi interrompido; o gate E2E permanece falho. Falta também verificar a compatibilidade das versões com a documentação oficial para resolver PD-002. Não promover TASK-002 até corrigir e revalidar a TASK-001.
+Execução: build, lint, typecheck, Vitest, descoberta Playwright e E2E passaram. No Windows, o teste E2E foi executado contra o servidor de produção iniciado separadamente, evitando falha no encerramento automático. Node 22.22.1 atende aos requisitos documentados de Next.js, Vitest e Playwright; lockfile registra as versões e `pnpm peers check` não apontou incompatibilidades. Alterações incidentais: `pnpm-workspace.yaml` existente, necessário à configuração do pnpm, e bloco em `AGENTS.md` gerado automaticamente pelo Next.js. Sem alterações de domínio, deploy ou credenciais.
 
 ### Phase / Priority
 
