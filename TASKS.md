@@ -17,8 +17,8 @@
 | 2 | TASK-002 — Schema e migrations | PHASE-01 | CRITICAL | TASK-001 | DONE |
 | 3 | TASK-003 — Seed do catálogo | PHASE-01 | HIGH | TASK-002 | DONE |
 | 4 | TASK-004 — Autenticação | PHASE-01 | CRITICAL | TASK-002 | DONE |
-| 5 | TASK-005 — Checkpoint PHASE-01 | PHASE-01 | CRITICAL | TASK-003, TASK-004 | READY |
-| 6 | TASK-006 — Design system e página inicial | PHASE-02 | HIGH | TASK-005 | BLOCKED |
+| 5 | TASK-005 — Checkpoint PHASE-01 | PHASE-01 | CRITICAL | TASK-003, TASK-004 | DONE |
+| 6 | TASK-006 — Design system e página inicial | PHASE-02 | HIGH | TASK-005 | READY |
 | 7 | TASK-007 — Catálogo, busca e filtros | PHASE-02 | HIGH | TASK-006 | BLOCKED |
 | 8 | TASK-008 — Detalhe e SEO público | PHASE-02 | HIGH | TASK-007 | BLOCKED |
 | 9 | TASK-009 — Checkpoint PHASE-02 | PHASE-02 | CRITICAL | TASK-008 | BLOCKED |
@@ -397,7 +397,9 @@ DoD global + schema/configuração coerentes com documentação oficial fixada.
 
 ### Status
 
-`READY`
+`DONE`
+
+Checkpoint: build, lint, typecheck, 3 testes unitários e 3 E2E passaram; schema Better Auth, constraints e catálogo foram conferidos no banco descartável. A migration foi aplicada em um schema novo; duas tentativas passaram e uma falhou sem diagnóstico detalhado. A conexão reutilizada preservou temporariamente outro schema padrão; cliente Prisma, seed e testes foram ajustados para usar `public` explicitamente e revalidados. Um typecheck concorrente com build falhou durante regeneração de arquivos do Next e passou ao rodar após o build. Schemas temporários criados no banco de teste foram preservados. Correções restritas aos artefatos da fundação; Incidental Changes: NONE; sem produção ou deploy.
 
 ### Phase / Priority
 
@@ -461,7 +463,7 @@ DoD global + relatório de checkpoint + TASK-006 promovida a `READY` somente dep
 
 ### Status
 
-`BLOCKED`
+`READY`
 
 ### Phase / Priority
 

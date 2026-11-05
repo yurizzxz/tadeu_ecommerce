@@ -8,7 +8,7 @@ if (!testUrl || (process.env.DATABASE_URL && testUrl === process.env.DATABASE_UR
   throw new Error("Configure TEST_DATABASE_URL distinto do banco da aplicação.");
 }
 
-const db = new PrismaClient({ adapter: new PrismaPg({ connectionString: testUrl }) });
+const db = new PrismaClient({ adapter: new PrismaPg({ connectionString: testUrl }, { schema: "public" }) });
 async function main() {
  try {
   for (const item of products) {

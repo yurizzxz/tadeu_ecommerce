@@ -8,7 +8,7 @@ export function getDb(): PrismaClient {
   if (!process.env.DATABASE_URL) throw new Error("DATABASE_URL não configurada");
   if (!globalForPrisma.devstorePrisma) {
     globalForPrisma.devstorePrisma = new PrismaClient({
-      adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),
+      adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }, { schema: "public" }),
     });
   }
   return globalForPrisma.devstorePrisma;

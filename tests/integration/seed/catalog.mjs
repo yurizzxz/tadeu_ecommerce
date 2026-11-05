@@ -7,6 +7,7 @@ if (!process.env.TEST_DATABASE_URL || process.env.TEST_DATABASE_URL === process.
 const client = new Client({ connectionString: process.env.TEST_DATABASE_URL });
 try {
   await client.connect();
+  await client.query("SET search_path TO public");
   const { rows } = await client.query(`SELECT count(*)::int AS total, count(DISTINCT slug)::int AS slugs,
     count(DISTINCT sku)::int AS skus, count(*) FILTER (WHERE price_in_cents < 0 OR stock < 0)::int AS invalid
     FROM products WHERE is_active`);

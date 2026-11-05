@@ -11,7 +11,8 @@ async function main() {
   const client = new Client({ connectionString: process.env.TEST_DATABASE_URL });
   try {
     await client.connect();
-    const result = await client.query("SELECT conname FROM pg_constraint WHERE conname = ANY($1::text[])", [[
+    await client.query("SET search_path TO public");
+    const result = await client.query("SELECT c.conname FROM pg_constraint c JOIN pg_namespace n ON n.oid = c.connamespace WHERE n.nspname = 'public' AND c.conname = ANY($1::text[])", [[
       "addresses_state_length_check", "products_price_nonnegative_check", "products_stock_nonnegative_check",
       "cart_items_quantity_positive_check", "orders_amounts_nonnegative_check", "order_items_values_check",
     ]]);
