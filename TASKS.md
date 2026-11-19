@@ -25,7 +25,7 @@
 | 10 | TASK-010 — Perfil e endereço | PHASE-03 | HIGH | TASK-009 | DONE |
 | 11 | TASK-011 — Carrinho persistente | PHASE-03 | CRITICAL | TASK-010 | DONE |
 | 12 | TASK-012 — Revisão e checkout transacional | PHASE-03 | CRITICAL | TASK-011 | DONE |
-| 13 | TASK-013 — Histórico e cancelamento | PHASE-03 | CRITICAL | TASK-012 | BLOCKED |
+| 13 | TASK-013 — Histórico e cancelamento | PHASE-03 | CRITICAL | TASK-012 | READY |
 | 14 | TASK-014 — Checkpoint PHASE-03 | PHASE-03 | CRITICAL | TASK-013 | BLOCKED |
 | 15 | TASK-015 — Hardening de testes | PHASE-04 | HIGH | TASK-014 | BLOCKED |
 | 16 | TASK-016 — E2E, acessibilidade e SEO | PHASE-04 | HIGH | TASK-015 | BLOCKED |
@@ -953,7 +953,7 @@ DoD global + evidência de atomicidade em PostgreSQL real de teste.
 
 ### Status
 
-`BLOCKED`
+`READY`
 
 ### Phase / Priority
 
