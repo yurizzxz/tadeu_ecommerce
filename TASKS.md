@@ -27,8 +27,8 @@
 | 12 | TASK-012 — Revisão e checkout transacional | PHASE-03 | CRITICAL | TASK-011 | DONE |
 | 13 | TASK-013 — Histórico e cancelamento | PHASE-03 | CRITICAL | TASK-012 | DONE |
 | 14 | TASK-014 — Checkpoint PHASE-03 | PHASE-03 | CRITICAL | TASK-013 | DONE |
-| 15 | TASK-015 — Hardening de testes | PHASE-04 | HIGH | TASK-014 | READY |
-| 16 | TASK-016 — E2E, acessibilidade e SEO | PHASE-04 | HIGH | TASK-015 | BLOCKED |
+| 15 | TASK-015 — Hardening de testes | PHASE-04 | HIGH | TASK-014 | DONE |
+| 16 | TASK-016 — E2E, acessibilidade e SEO | PHASE-04 | HIGH | TASK-015 | READY |
 | 17 | TASK-017 — Segurança e operação | PHASE-04 | HIGH | TASK-016 | BLOCKED |
 | 18 | TASK-018 — Checkpoint final | PHASE-04 | CRITICAL | TASK-017 | BLOCKED |
 
@@ -1088,7 +1088,11 @@ DoD global + relatório + TASK-015 promovida somente após `DONE`.
 
 ### Status
 
-`READY`
+`DONE`
+
+Matriz comportamental: parâmetros/preços (`tests/unit/catalog`); endereço/nome (`tests/unit/profile`, `tests/unit/auth`); quantidades (`tests/unit/cart`); revisão (`tests/unit/orders`); constraints (`tests/integration/db/constraints.mjs`); snapshots, centavos, propriedade, rollback, concorrência e cancelamento válido, expirado, repetido e no limite (`tests/integration/orders`). Os E2E da TASK-014 complementam fluxos e isolamento. Fixtures de integração usam identificadores exclusivos e limpam seus dados.
+
+Validação: Vitest com 17 testes passou duas vezes em PostgreSQL de teste; constraints, lint e typecheck passaram. Build e E2E: N/A para mudança restrita à suíte/configuração Vitest; última execução da TASK-014 passou. Incidental Changes: NONE. Sem alterações funcionais ou produção.
 
 ### Phase / Priority
 
@@ -1154,7 +1158,7 @@ DoD global + nenhuma lacuna crítica sem justificativa registrada.
 
 ### Status
 
-`BLOCKED`
+`READY`
 
 ### Phase / Priority
 
