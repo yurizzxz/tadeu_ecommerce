@@ -26,8 +26,8 @@
 | 11 | TASK-011 — Carrinho persistente | PHASE-03 | CRITICAL | TASK-010 | DONE |
 | 12 | TASK-012 — Revisão e checkout transacional | PHASE-03 | CRITICAL | TASK-011 | DONE |
 | 13 | TASK-013 — Histórico e cancelamento | PHASE-03 | CRITICAL | TASK-012 | DONE |
-| 14 | TASK-014 — Checkpoint PHASE-03 | PHASE-03 | CRITICAL | TASK-013 | BLOCKED |
-| 15 | TASK-015 — Hardening de testes | PHASE-04 | HIGH | TASK-014 | BLOCKED |
+| 14 | TASK-014 — Checkpoint PHASE-03 | PHASE-03 | CRITICAL | TASK-013 | DONE |
+| 15 | TASK-015 — Hardening de testes | PHASE-04 | HIGH | TASK-014 | READY |
 | 16 | TASK-016 — E2E, acessibilidade e SEO | PHASE-04 | HIGH | TASK-015 | BLOCKED |
 | 17 | TASK-017 — Segurança e operação | PHASE-04 | HIGH | TASK-016 | BLOCKED |
 | 18 | TASK-018 — Checkpoint final | PHASE-04 | CRITICAL | TASK-017 | BLOCKED |
@@ -1023,7 +1023,9 @@ DoD global + idempotência do efeito de estoque comprovada.
 
 ### Status
 
-`BLOCKED`
+`DONE`
+
+Checkpoint: banco de teste reconstruído com autorização explícita, migration e seed aplicadas; constraints e índices verificados. Build, lint, typecheck, 13 testes unitários e 22 E2E passaram. A jornada completa passou com baixa e reposição de estoque; testes existentes verificaram isolamento, concorrência de checkout/cancelamento e regressão pública. Alterações primárias: teste da jornada e este registro. Incidental Changes: NONE. Sem deploy ou produção.
 
 ### Phase / Priority
 
@@ -1086,7 +1088,7 @@ DoD global + relatório + TASK-015 promovida somente após `DONE`.
 
 ### Status
 
-`BLOCKED`
+`READY`
 
 ### Phase / Priority
 
