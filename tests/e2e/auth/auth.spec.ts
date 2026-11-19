@@ -1,6 +1,9 @@
 import { randomUUID } from "node:crypto";
 import { expect, test } from "@playwright/test";
 
+// Better Auth compartilha a janela de limite entre os testes executados no mesmo servidor.
+test.afterEach(async () => { await new Promise((resolve) => setTimeout(resolve, 10250)); });
+
 test("cadastro, sessão, saída e novo login", async ({ page }) => {
   const email = `teste-${randomUUID()}@example.invalid`;
   const password = `Senha-${randomUUID()}`;

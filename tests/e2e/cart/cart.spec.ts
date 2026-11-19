@@ -5,6 +5,8 @@ import { Client } from "pg";
 
 config({ quiet: true });
 
+test.afterEach(async () => { await new Promise((resolve) => setTimeout(resolve, 10250)); });
+
 test("carrinho persiste, isola usuários e respeita estoque em adições simultâneas", async ({ browser }) => {
   const url = process.env.TEST_DATABASE_URL;
   if (!url || url === process.env.DATABASE_URL) throw new Error("Banco de teste ausente ou não isolado");

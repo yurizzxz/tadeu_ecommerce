@@ -1,0 +1,7 @@
+.orders-page { padding-block: 56px; min-height: 60vh; }
+.orders-page h1 { margin-block: 24px; }
+.orders-page section { border-top: 1px solid var(--line); padding-block: 24px; }
+.orders-page ul { list-style: none; padding: 0; }
+.orders-page li { padding: 16px 0; border-bottom: 1px solid var(--line); }
+.orders-page li a { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+.orders-page button { cursor: pointer; }
