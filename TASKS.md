@@ -30,7 +30,7 @@
 | 15 | TASK-015 — Hardening de testes | PHASE-04 | HIGH | TASK-014 | DONE |
 | 16 | TASK-016 — E2E, acessibilidade e SEO | PHASE-04 | HIGH | TASK-015 | DONE |
 | 17 | TASK-017 — Segurança e operação | PHASE-04 | HIGH | TASK-016 (exceção aprovada) | DONE |
-| 18 | TASK-018 — Checkpoint final | PHASE-04 | CRITICAL | TASK-017 | IN_REVIEW |
+| 18 | TASK-018 — Checkpoint final | PHASE-04 | CRITICAL | TASK-017 | DONE |
 
 ## 3. Grafo e ordem topológica
 
@@ -1306,11 +1306,13 @@ DoD global + riscos aceitos permanecem explícitos + nenhum deploy.
 
 ### Status
 
-`IN_REVIEW`
+`DONE`
 
 Checkpoint anterior executado com a exceção de dependência aprovada. Build, lint, typecheck, 20 testes Vitest, constraints e 25 E2E em cada um de Chrome, Firefox e Edge passaram no build atual. Naquela etapa, RF-013/RNF-003 ainda não tinham inspeção manual interativa e a TASK-016 permanecia `FAILED`. O Safari permanece não validado por decisão do usuário. Relatório inicial no commit `8572ac1`; sem deploy, produção ou teste de backup/restauração.
 
 Atualização posterior: o usuário informou que a inspeção manual solicitada funcionou; TASK-016 foi concluída e o relatório de checkpoint foi atualizado em `84b88ec`. A aprovação do relatório final continua necessária para a Definition of Done da TASK-018. Nenhuma autorização de deploy foi recebida.
+
+Aceite final do usuário recebido. TASK-018 concluída; commit de registro em `84b88ec`. Safari permanece risco aceito e não validado. Nenhum deploy ou publicação executado.
 
 ### Phase / Priority
 
