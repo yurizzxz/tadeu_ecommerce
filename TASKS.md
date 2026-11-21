@@ -28,9 +28,9 @@
 | 13 | TASK-013 — Histórico e cancelamento | PHASE-03 | CRITICAL | TASK-012 | DONE |
 | 14 | TASK-014 — Checkpoint PHASE-03 | PHASE-03 | CRITICAL | TASK-013 | DONE |
 | 15 | TASK-015 — Hardening de testes | PHASE-04 | HIGH | TASK-014 | DONE |
-| 16 | TASK-016 — E2E, acessibilidade e SEO | PHASE-04 | HIGH | TASK-015 | READY |
-| 17 | TASK-017 — Segurança e operação | PHASE-04 | HIGH | TASK-016 | BLOCKED |
-| 18 | TASK-018 — Checkpoint final | PHASE-04 | CRITICAL | TASK-017 | BLOCKED |
+| 16 | TASK-016 — E2E, acessibilidade e SEO | PHASE-04 | HIGH | TASK-015 | DONE |
+| 17 | TASK-017 — Segurança e operação | PHASE-04 | HIGH | TASK-016 (exceção aprovada) | DONE |
+| 18 | TASK-018 — Checkpoint final | PHASE-04 | CRITICAL | TASK-017 | IN_REVIEW |
 
 ## 3. Grafo e ordem topológica
 
@@ -1158,7 +1158,17 @@ DoD global + nenhuma lacuna crítica sem justificativa registrada.
 
 ### Status
 
-`READY`
+`DONE`
+
+Registro anterior de validação parcial: Firefox e Chrome passaram 25 E2E cada; WebKit passou 23 de 25, com falha de foco por Tab no link inicial e falha intermitente no teste de carrinho (passou na repetição isolada). O teste de fallback foi ajustado para alcançar a seção de imagens com carregamento tardio e passou isoladamente em Firefox e na suíte Chrome. Naquela etapa, a inspeção manual de acessibilidade e a validação no Safari real estavam pendentes; WebKit no Windows não comprova Safari.
+
+Investigação adicional no WebKit automatizado do Windows: Tab e Alt+Tab não moveram o foco inicial do `body`, inclusive com o link visível e `tabindex="0"`; após focar um campo inserido para diagnóstico, Tab alcançou o link. Isso não determina o comportamento inicial no Safari real. O teste de carrinho foi ajustado para adulterar o `FormData` no envio, preservando a verificação de produto inativo mesmo após hidratação; passou uma execução e três repetições isoladas no WebKit. A hipótese de que a hidratação causou a falha anterior não está comprovada.
+
+Decisão do usuário: por se tratar de projeto acadêmico, o Safari pode permanecer temporariamente não validado. RNF-006 foi atualizado no README para registrar essa limitação. A inspeção manual de acessibilidade exigida por RNF-003 não foi dispensada.
+
+Inspeção visual parcial e correções de identificação dos controles de autenticação registradas em `docs/architecture/verificacao-acessibilidade-task-016.md`. Chrome passou nos seis testes focados de acessibilidade pública, autenticação e jornada autenticada após as correções; build, lint e typecheck passaram. A inspeção interativa manual ainda estava pendente nessa etapa.
+
+Conclusão posterior: o usuário informou que o roteiro de inspeção manual interativa funcionou. Chrome, Firefox e Edge passaram 25 E2E cada no mesmo código validado no checkpoint; build, lint, typecheck, 20 testes Vitest e constraints passaram. A aprovação não atesta teste com leitor de tela ou auditoria WCAG integral. Safari segue não validado por decisão do usuário e a limitação do foco inicial no WebKit automatizado em Windows permanece registrada acima. Alteração de requisito em `README.md` foi autorizada explicitamente. Incidental Changes: NONE. Commit na branch da TASK `9d614a0`, integrado ao checkpoint como `05be1a8`.
 
 ### Phase / Priority
 
@@ -1223,7 +1233,13 @@ DoD global + evidência acessível e SEO registrada.
 
 ### Status
 
-`BLOCKED`
+`DONE`
+
+Exceção operacional aprovada pelo usuário: executar TASK-017 e TASK-018 antes do encerramento da TASK-016, preservando a inspeção interativa de acessibilidade como pendência no checkpoint final. A exceção não declara a TASK-016 concluída nem altera os critérios de aceite finais. A ampliação de escopo para logs sanitizados nas actions e testes correspondentes também foi aprovada.
+
+Auditoria: actions verificam sessão e entrada; testes existentes cobrem isolamento e transações. O servidor de teste rejeita URL igual à da aplicação; comparação textual não garante isolamento. Segredos configurados não foram encontrados nos arquivos rastreados examinados ou no bundle cliente. Falhas inesperadas tratadas nas actions e nas leituras públicas geram logs estruturados sem dados sensíveis, verificadas por testes. Build, lint, typecheck, Vitest 20/20, constraints e Chrome E2E 25/25 passaram. A sanitização integral dos logs de bibliotecas e runtime não foi comprovada. Detalhes e runbook em `docs/architecture/seguranca-operacao-task-017.md`. Nenhum deploy ou operação em produção.
+
+Commit: `dc1f931`. Alterações primárias: logs sanitizados, testes e runbook de operação. Alterações incidentais: inclusão de logs mínimos nas duas páginas públicas que tratam falhas de leitura, necessária ao mesmo requisito de observabilidade. A atualização deste backlog permanece na árvore de trabalho junto às alterações anteriores da TASK-016.
 
 ### Phase / Priority
 
@@ -1235,7 +1251,7 @@ Validar fronteiras de segurança, logs, segredos, banco de teste e documentaçã
 
 ### Dependências
 
-`DEPENDS_ON: TASK-016`
+`DEPENDS_ON: TASK-016 (exceção operacional aprovada; pendência mantida)`
 
 ### Requisitos relacionados
 
@@ -1290,7 +1306,11 @@ DoD global + riscos aceitos permanecem explícitos + nenhum deploy.
 
 ### Status
 
-`BLOCKED`
+`IN_REVIEW`
+
+Checkpoint anterior executado com a exceção de dependência aprovada. Build, lint, typecheck, 20 testes Vitest, constraints e 25 E2E em cada um de Chrome, Firefox e Edge passaram no build atual. Naquela etapa, RF-013/RNF-003 ainda não tinham inspeção manual interativa e a TASK-016 permanecia `FAILED`. O Safari permanece não validado por decisão do usuário. Relatório inicial no commit `8572ac1`; sem deploy, produção ou teste de backup/restauração.
+
+Atualização posterior: o usuário informou que a inspeção manual solicitada funcionou; TASK-016 foi concluída e o relatório de checkpoint foi atualizado em `84b88ec`. A aprovação do relatório final continua necessária para a Definition of Done da TASK-018. Nenhuma autorização de deploy foi recebida.
 
 ### Phase / Priority
 
