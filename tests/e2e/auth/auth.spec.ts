@@ -24,6 +24,7 @@ test("cadastro, sessão, saída e novo login", async ({ page }) => {
   await page.getByRole("button", { name: "Entrar", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Minha conta" })).toBeVisible();
   await page.getByRole("button", { name: "Sair" }).click();
+  await expect(page).toHaveURL(/\/entrar$/);
   await page.goto("/cadastro");
   await page.getByLabel("Nome").fill("Cliente de teste");
   await page.getByLabel("E-mail").fill(email);

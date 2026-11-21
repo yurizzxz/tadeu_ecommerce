@@ -6,5 +6,5 @@ import Link from "next/link";
 export default async function AccountPage() {
   const session = await getSession();
   if (!session) redirect("/entrar");
-  return <main><h1>Minha conta</h1><p>Olá, {session.user.name}.</p><p><Link href="/perfil">Editar perfil e endereço</Link></p><p><Link href="/pedidos">Meus pedidos</Link></p><SignOut /></main>;
+  return <main className="auth-page container account-page"><h1>Minha conta</h1><p>Olá, {session.user.name}.</p><p><Link href="/perfil">Editar perfil e endereço</Link></p><p><Link href="/pedidos">Meus pedidos</Link></p><SignOut /></main>;
 }

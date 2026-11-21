@@ -17,5 +17,5 @@ export function SignOut() {
       router.refresh();
     } catch { setError(true); } finally { setPending(false); }
   }
-  return <><button type="button" onClick={logout} disabled={pending}>Sair</button>{error && <p role="alert">Não foi possível sair. Tente novamente.</p>}</>;
+  return <><button className="button button-outline" type="button" onClick={logout} disabled={pending}>Sair</button>{error && <p role="alert">Não foi possível sair. Tente novamente.</p>}</>;
 }

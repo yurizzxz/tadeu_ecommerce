@@ -33,14 +33,14 @@ export function AuthForm({ mode }: { mode: "login" | "cadastro" }) {
     }
   }
   return (
-    <main>
+    <main className="auth-page container">
       <h1>{mode === "cadastro" ? "Criar conta" : "Entrar"}</h1>
       <form method="post" onSubmit={submit}>
         {mode === "cadastro" && <label>Nome<input name="name" autoComplete="name" required /></label>}
         <label>E-mail<input name="email" type="email" autoComplete="email" required /></label>
         <label>Senha<input name="password" type="password" autoComplete={mode === "cadastro" ? "new-password" : "current-password"} minLength={8} maxLength={128} required /></label>
         {error && <p role="alert">{error}</p>}
-        <button disabled={pending} type="submit">{pending ? "Aguarde..." : mode === "cadastro" ? "Criar conta" : "Entrar"}</button>
+        <button className="button button-primary" disabled={pending} type="submit">{pending ? "Aguarde..." : mode === "cadastro" ? "Criar conta" : "Entrar"}</button>
       </form>
       <Link href={mode === "cadastro" ? "/entrar" : "/cadastro"}>{mode === "cadastro" ? "Já tenho conta" : "Criar conta"}</Link>
     </main>

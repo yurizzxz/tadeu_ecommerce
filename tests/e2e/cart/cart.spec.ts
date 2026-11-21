@@ -68,7 +68,9 @@ test("carrinho persiste, isola usuários e respeita estoque em adições simult�
     await pages[1].reload();
     await expect(pages[1].getByLabel("Quantidade")).toHaveValue("1");
     await pages[0].goto(`/produtos/${slug}`);
-    await pages[0].locator('input[name="productId"]').evaluate((input: HTMLInputElement, id: string) => { input.value = id; }, inactiveId);
+    await pages[0].locator('input[name="productId"]').evaluate((input: HTMLInputElement, id: string) => {
+      input.form?.addEventListener("formdata", (event) => event.formData.set("productId", id), { once: true });
+    }, inactiveId);
     await pages[0].getByRole("button", { name: "Adicionar ao carrinho" }).click();
     await expect(pages[0].getByRole("alert").filter({ hasText: "Produto indisponível" })).toBeVisible();
     await db.query("UPDATE public.products SET stock = 0 WHERE id = $1", [productId]);

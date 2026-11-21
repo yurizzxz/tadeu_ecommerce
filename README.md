@@ -221,7 +221,7 @@ Entregar um MVP demonstrável de e-commerce que valide catálogo, autenticação
 | RNF-003 | Acessibilidade | Fluxos críticos atendem WCAG 2.1 AA nos critérios automatizáveis e inspeção manual definida nos testes. |
 | RNF-004 | Responsividade | Interface funciona a partir de 320 px e nos tamanhos desktop usuais, sem perda funcional. |
 | RNF-005 | Desempenho | Páginas públicas buscam somente campos necessários, imagens são otimizadas e consultas de catálogo/pedido usam índices previstos. |
-| RNF-006 | Compatibilidade | Suporte às versões estáveis atuais de Chrome, Edge, Firefox e Safari no momento da implementação. |
+| RNF-006 | Compatibilidade | Validar Chrome, Edge e Firefox. Safari permanece não validado por indisponibilidade de ambiente; testes em WebKit não comprovam compatibilidade com Safari. |
 | RNF-007 | SEO | Páginas públicas possuem metadata; páginas autenticadas não devem ser indexadas. |
 | RNF-008 | Observabilidade | Erros de servidor recebem log estruturado sem senha, token, cookie ou dados sensíveis. Logs padrão da Vercel bastam no MVP. |
 | RNF-009 | Testabilidade | Regras transacionais e validações possuem testes Vitest; fluxos críticos possuem testes Playwright. |

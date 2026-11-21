@@ -15,6 +15,7 @@ for (const width of [320, 1280]) {
 test("apresenta fallback quando uma imagem falha", async ({ page }) => {
   await page.route("**/_next/image?**", (route) => route.abort());
   await page.goto("/");
+  await page.getByRole("heading", { name: "Em destaque." }).scrollIntoViewIfNeeded();
   await expect(page.getByText("Imagem indisponível").first()).toBeVisible();
 });
 
