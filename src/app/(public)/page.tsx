@@ -2,12 +2,14 @@ import Link from "next/link";
 import { ArrowDownRight, ArrowRight, Cpu, PackageCheck, ShieldCheck } from "lucide-react";
 import { ProductImage } from "@/components/product-image";
 import { getHomeCatalog } from "@/features/catalog/queries/home";
+import { logServerError } from "@/lib/log-server-error";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
   let catalog: Awaited<ReturnType<typeof getHomeCatalog>>;
   try { catalog = await getHomeCatalog(); } catch {
+    logServerError("catalog.home");
     return <main className="container catalog-error"><h1>Não foi possível carregar a loja.</h1><p>Tente novamente em alguns instantes.</p></main>;
   }
   return (

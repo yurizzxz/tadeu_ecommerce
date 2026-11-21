@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { getSession } from "@/lib/auth/server";
+import { logServerError } from "@/lib/log-server-error";
 import { insertAddress, updateName } from "../persistence/profile";
 import { validateAddress, validateName } from "./validation";
 
@@ -18,6 +19,7 @@ export async function saveName(_previous: ActionState, form: FormData): Promise<
     revalidatePath("/conta");
     return { message: "Nome atualizado.", success: true };
   } catch {
+    logServerError("profile.name");
     return { message: "Não foi possível atualizar o nome. Tente novamente.", success: false };
   }
 }
@@ -35,6 +37,7 @@ export async function saveAddress(_previous: ActionState, form: FormData): Promi
     if (typeof error === "object" && error !== null && "code" in error && error.code === "P2002") {
       return { message: "Você já possui um endereço cadastrado.", success: false };
     }
+    logServerError("profile.address");
     return { message: "Não foi possível cadastrar o endereço. Tente novamente.", success: false };
   }
 }

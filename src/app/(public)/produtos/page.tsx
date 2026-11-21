@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ProductImage } from "@/components/product-image";
 import { getCatalog } from "@/features/catalog/queries/catalog";
 import { parseCatalogParams } from "@/features/catalog/queries/params";
+import { logServerError } from "@/lib/log-server-error";
 import "./produtos.css";
 
 export const dynamic = "force-dynamic";
@@ -13,7 +14,7 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
 export default async function CatalogPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const filters = parseCatalogParams(await searchParams);
   let data: Awaited<ReturnType<typeof getCatalog>>;
-  try { data = await getCatalog(filters); } catch { return <main className="container catalog-error"><h1>Não foi possível carregar os produtos.</h1><p>Tente novamente em alguns instantes.</p></main>; }
+  try { data = await getCatalog(filters); } catch { logServerError("catalog.list"); return <main className="container catalog-error"><h1>Não foi possível carregar os produtos.</h1><p>Tente novamente em alguns instantes.</p></main>; }
   return <main className="container catalog-page">
     <p className="breadcrumbs"><Link href="/">Início</Link> / Produtos</p>
     <div className="catalog-title"><div><p className="section-kicker">DEVSTORE / CATÁLOGO</p><h1>Encontre sua próxima peça.</h1><p>Explore os componentes para montar ou atualizar seu computador.</p></div><span>{data.products.length} {data.products.length === 1 ? "produto" : "produtos"}</span></div>

@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { getSession } from "@/lib/auth/server";
+import { logServerError } from "@/lib/log-server-error";
 import { CartError, mutateCart } from "../persistence/cart";
 import { parseQuantity, validId } from "./validation";
 
@@ -18,6 +19,7 @@ async function perform(operation: "add" | "update" | "remove", form: FormData): 
     revalidatePath("/carrinho");
     return { message: operation === "remove" ? "Produto removido do carrinho." : "Carrinho atualizado.", success: true };
   } catch (error) {
+    if (!(error instanceof CartError)) logServerError(`cart.${operation}`);
     return { message: error instanceof CartError ? error.message : "Não foi possível atualizar o carrinho. Tente novamente.", success: false };
   }
 }

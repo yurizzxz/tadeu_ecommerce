@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { getSession } from "@/lib/auth/server";
+import { logServerError } from "@/lib/log-server-error";
 import { cancelOrder } from "../persistence/orders";
 
 export type CancelState = { message: string; success: boolean };
@@ -16,6 +17,7 @@ export async function cancelOrderAction(_state: CancelState, form: FormData): Pr
     revalidatePath("/pedidos");
     return cancelled ? { message: "Pedido cancelado.", success: true } : { message: "Não foi possível cancelar. O pedido pode estar fora do prazo ou já cancelado.", success: false };
   } catch {
+    logServerError("order.cancel");
     return { message: "Não foi possível cancelar o pedido. Tente novamente.", success: false };
   }
 }
