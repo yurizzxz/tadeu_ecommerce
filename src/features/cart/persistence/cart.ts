@@ -4,7 +4,7 @@ import { getDb } from "@/db/client";
 export class CartError extends Error {}
 
 export async function getCart(userId: string) {
-  return getDb().cart.findUnique({ where: { userId }, include: { items: { orderBy: { createdAt: "asc" }, include: { product: { select: { name: true, slug: true, priceInCents: true, stock: true, isActive: true } } } } } });
+  return getDb().cart.findUnique({ where: { userId }, include: { items: { orderBy: { createdAt: "asc" }, include: { product: { select: { name: true, slug: true, imageUrl: true, priceInCents: true, stock: true, isActive: true } } } } } });
 }
 
 export async function mutateCart(userId: string, operation: "add" | "update" | "remove", id: string, quantity?: number) {
