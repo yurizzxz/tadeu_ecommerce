@@ -8,5 +8,5 @@ export function ProductImage({ src, alt }: { src: string; alt: string }) {
   if (failedSrc === src) {
     return <div role="img" aria-label={`Imagem indisponível: ${alt}`}>Imagem indisponível</div>;
   }
-  return <Image src={src} alt={alt} width={800} height={800} onError={() => setFailedSrc(src)} />;
+  return <><Image src={src} alt={alt} width={800} height={800} onError={() => setFailedSrc(src)} /><small>Imagem ilustrativa</small></>;
 }
