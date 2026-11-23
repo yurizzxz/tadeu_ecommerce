@@ -31,6 +31,7 @@
 | 16 | TASK-016 — E2E, acessibilidade e SEO | PHASE-04 | HIGH | TASK-015 | DONE |
 | 17 | TASK-017 — Segurança e operação | PHASE-04 | HIGH | TASK-016 (exceção aprovada) | DONE |
 | 18 | TASK-018 — Checkpoint final | PHASE-04 | CRITICAL | TASK-017 | DONE |
+| 19 | TASK-019 — Validação do formulário de endereço | Pós-MVP | HIGH | TASK-010 | FAILED |
 
 ## 3. Grafo e ordem topológica
 
@@ -1371,6 +1372,74 @@ Todos os Quality Gates definidos no `AGENTS.md`, a partir de banco de teste cont
 ### Definition of Done
 
 DoD global + relatório final aprovado. Publicação continua não autorizada.
+
+## TASK-019 — Validação do formulário de endereço
+
+### Status
+
+`FAILED` — implementação concluída, mas E2E obrigatório não executado: `TEST_DATABASE_URL` não está configurada. Não utilizar banco de produção para testes. Retomar a validação com banco de teste isolado antes de concluir.
+
+Relatório parcial: branch `feature/TASK-019-validacao-endereco`. Mudanças primárias: validação compartilhada, mensagens acessíveis por campo e cenário E2E de dados inválidos. Incidental Changes: NONE. Build, lint, typecheck e três testes unitários passaram; E2E e critérios de aceitação pendentes de verificação. Integração de banco e segurança: N/A, pois persistência e autorização não foram alteradas. Scope Guard respeitado; DoD não atendida pelo E2E pendente.
+
+### Phase / Priority
+
+`Pós-MVP` / `HIGH`
+
+### Objetivo
+
+Apresentar validação simples e compreensível no formulário de cadastro de endereço, alinhada às regras já existentes no servidor.
+
+### Dependências
+
+`DEPENDS_ON: TASK-010`
+
+### Requisitos relacionados
+
+RF-007, RN-007, RNF-001, RNF-013, UC-006.
+
+### Artefatos esperados
+
+Formulário com feedback acessível para campos inválidos e testes relevantes para a validação e o fluxo de cadastro.
+
+### Allowed Changes
+
+```text
+ALLOWED_CHANGES:
+- src/features/profile/components/**
+- src/features/profile/application/validation.ts somente para compartilhar as regras existentes
+- tests/unit/profile/**
+- tests/e2e/profile/**
+- TASKS.md
+```
+
+### Incidental Changes Policy
+
+`MINIMAL_DIRECTLY_CAUSED_CHANGES_ALLOWED`
+
+### Forbidden Changes
+
+```text
+FORBIDDEN_CHANGES:
+- alterar regras de negócio ou contrato público;
+- remover validação no servidor;
+- editar ou excluir endereços existentes, ou permitir múltiplos endereços;
+- alterar schema, migrations ou dados de produção;
+- integrar serviço externo ou adicionar dependência não prevista.
+```
+
+### Critérios de aceitação
+
+Campos obrigatórios, CEP e UF inválidos recebem feedback claro e acessível; dados válidos podem ser enviados; a validação do servidor e a restrição de um endereço permanecem aplicáveis.
+
+### Testes necessários
+
+Testes relevantes das regras existentes e E2E do formulário com dados inválidos e válidos, usando banco de teste separado.
+
+### Definition of Done
+
+DoD global, gates aplicáveis e relatório de escopo; nenhuma informação sensível em logs.
+
+---
 
 ## 6. Template de Scope Escalation
 

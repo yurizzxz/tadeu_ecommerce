@@ -40,6 +40,12 @@ test("perfil exige sessão e mantém nome e endereço isolados por usuário", as
     await first.getByLabel("Nome").fill("Nome atualizado");
     await first.getByRole("button", { name: "Salvar nome" }).click();
     await expect(first.getByRole("status")).toHaveText("Nome atualizado.");
+    await first.getByLabel("CEP").fill("123");
+    await first.getByLabel("UF").fill("XX");
+    await first.getByRole("button", { name: "Cadastrar endereço" }).click();
+    await expect(first.getByText("Informe um CEP com oito dígitos.")).toBeVisible();
+    await expect(first.getByText("Informe uma UF válida, como SP.")).toBeVisible();
+    await expect(first.getByLabel("Rua", { exact: true })).toHaveAttribute("aria-invalid", "true");
     await first.getByLabel("CEP").fill("12345-678");
     await first.getByLabel("Rua", { exact: true }).fill("Rua de teste");
     await first.getByLabel("Número").fill("10");

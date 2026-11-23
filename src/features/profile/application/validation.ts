@@ -1,5 +1,14 @@
 const states = new Set("AC AL AP AM BA CE DF ES GO MA MT MS MG PA PB PR PE PI RJ RN RS RO RR SC SP SE TO".split(" "));
 
+export function addressFieldError(key: string, value: string): string | null {
+  const trimmed = value.trim();
+  if (key === "complement") return null;
+  if (!trimmed) return "Preencha este campo.";
+  if (key === "postalCode" && !/^\d{8}$/.test(trimmed.replace(/[-\s]/g, ""))) return "Informe um CEP com oito dígitos.";
+  if (key === "state" && !states.has(trimmed.toUpperCase())) return "Informe uma UF válida, como SP.";
+  return null;
+}
+
 export function validateName(value: FormDataEntryValue | null): string | null {
   if (typeof value !== "string") return null;
   return value.trim() || null;
@@ -21,6 +30,6 @@ export function validateAddress(form: FormData) {
   const neighborhood = read("neighborhood");
   const city = read("city");
   const state = read("state").toUpperCase();
-  if (!/^\d{8}$/.test(postalCode) || !street || !number || !neighborhood || !city || !states.has(state)) return null;
+  if (Object.entries({ postalCode, street, number, neighborhood, city, state }).some(([key, value]) => addressFieldError(key, value))) return null;
   return { postalCode, street, number, complement: complement || null, neighborhood, city, state };
 }
